@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SIH Main Page</title>
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    background-image: url('C:/Users/sangamesh chikkanagi/Desktop/sih/static/aicte.jpeg'); /* Replace with your image file path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: transparent; /* Set background color to transparent */
+}
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding-top: 50px; /* Add padding to make space for the fixed buttons */
+        }
+
+        .fixed-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="fixed-buttons">
+        <a href="/registration_login" class="button">Registration & Login</a>
+        <a href="/about" class="button">About</a>
+        <a href="/help" class="button">Help</a>
+    </div>
+    </body>
+</html>

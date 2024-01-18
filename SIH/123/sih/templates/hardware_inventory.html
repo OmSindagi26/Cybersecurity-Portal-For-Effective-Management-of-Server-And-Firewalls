@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ type }} Hardware Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4; /* Optional background color */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(238, 8, 8, 0.2);
+        }
+
+        input[type="text"],
+        select {
+            width: 60%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #111010;
+            border-radius: 3px;
+            font-size: 16px;
+            color: #0a0a0a;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .back {
+            position: absolute;
+            top: 6px;
+            left: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a class="back" href="/">Back to Previous page </a>
+    
+    <h1>Hardware Inventory</h1>
+    <form method="POST" action="/add_hardware">
+        <label for="hardware_name">Hardware Name:</label>
+        <select id="hardware_name" name="hardware_name" required>
+            <option value="servers">Servers</option>
+            <option value="switches">Switches</option>
+            <option value="firewalls">Firewalls</option>
+            <option value="load_balancers">Load Balancers</option>
+            <option value="others">Others</option>
+        </select><br><br>
+
+        
+        <label for="hardware_status">Status:</label>
+<select id="hardware_status" name="hardware_status" required>
+    <option value="Online">Online</option>
+    <option value="Offline">Offline</option>
+</select><br><br>
+
+        
+
+        <label for="hardware_warranty">Warranty Expiry Date:</label>
+        <input type="date" id="hardware_warranty" name="hardware_warranty"><br><br>
+
+        <label for="hardware_maintenance">Next Maintenance Date:</label>
+        <input type="date" id="hardware_maintenance" name="hardware_maintenance"><br><br>
+
+        <button type="submit">Add Inventory</button>
+    </form>
+</body>
+</html>

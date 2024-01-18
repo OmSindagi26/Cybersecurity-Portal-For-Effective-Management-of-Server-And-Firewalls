@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Add your CSS and other assets here -->
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ user.username }} (Admin)</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/server_details">Server Details</a></li>
+                <li><a href="/firewall_details">Firewall Details</a></li>
+                <li><a href="/server_provisioning">Server Provisioning</a></li>
+                <li><a href="/server_provisioning_requests">Provisioning Requests</a></li>
+                <li><a href="/hardware_inventory">Hardware Inventory</a></li>
+                <li><a href="/reporting_page">Reporting</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Admin-specific content goes here -->
+        <p>This is the admin dashboard. You can manage servers, firewalls, provisioning requests, hardware inventory, and reporting here.</p>
+    </main>
+    <footer>
+        <p>&copy; 2023 Your Company</p>
+    </footer>
+</body>
+</html>

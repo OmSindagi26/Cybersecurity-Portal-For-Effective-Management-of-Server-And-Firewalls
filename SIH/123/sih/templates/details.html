@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ type }} Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ type }} Details</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <!-- Define table headers based on type -->
+                    {% if type == 'Server' %}
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>IP Address</th>
+                        <!-- Add a column for Delete button (visible to admin users) -->
+                        {% if user and user['role'] == 'admin' %}
+                            <th>Delete</th>
+                        {% endif %}
+                    {% elif type == 'Firewall Rule' %}
+                        <th>Rule ID</th>
+                        <th>Source IP</th>
+                        <th>Action</th>
+                        <!-- Add a column for Delete button (visible to admin users) -->
+                        {% if user and user['role'] == 'admin' %}
+                            <th>Delete</th>
+                        {% endif %}
+                    {% elif type == 'Hardware Details' %}
+                        <th>Server Name</th>
+                        <th>IP Adress</th>
+                        <th>Expiry Date</th>
+                        <th>Maintainance Date</th>
+                        <!-- Add a column for Delete button (visible to admin users) -->
+                        {% if user and user['role'] == 'admin' %}
+                            <th>Delete</th>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details %}
+                    <tr>
+                        {% if type == 'Server' %}
+                            <td>{{ detail.server_name }}</td>
+                            <td>{{ detail.status }}</td>
+                            <td>{{ detail.ip }}</td>
+                            <!-- Add a column for Delete button (visible to admin users) -->
+                            {% if user and user['role'] == 'admin' %}
+                                <td>
+                                    <form method="POST" action="{{ url_for('delete_server', server_index=loop.index0) }}">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            {% endif %}
+                        {% elif type == 'Firewall Rule' %}
+                            <td>{{ detail.rule_id }}</td>
+                            <td>{{ detail.source_ip }}</td>
+                            <td>{{ detail.action }}</td>
+                            <!-- Add a column for Delete button (visible to admin users) -->
+                            {% if user and user['role'] == 'admin' %}
+                                <td>
+                                    <form method="POST" action="{{ url_for('delete_firewall_rule', rule_id=detail.rule_id) }}">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Back Button to Return to Add Details Page -->
+        <a href="/">Back to Add Details</a>
+    </div>
+</body>
+</html>

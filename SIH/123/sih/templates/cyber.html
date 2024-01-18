@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Portal</title>
+    <!-- Link to different CSS files for styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='cyb.css') }}">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Welcome to the Cybersecurity Portal</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Servers</a></li>
+                <li><a href="#">Firewalls</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <div class="section-container">
+            <section class="management-section">
+        
+                <p id="moving-text" class="moving-text">Cybersecurity Portal for Effective Management of Servers and Firewalls.</p>
+                <div class="button-container">
+
+                </div>
+            </section>
+        </div>
+        
+
+        <div class="section-container">
+            <section class="management-section">
+                <h2>Server Management</h2>
+                <p>The Server Management section provides access to tools and resources for effectively managing servers within your network infrastructure. This includes features for configuring, monitoring, and maintaining your servers to ensure optimal performance and security.</p>
+                
+            </section>
+            <section class="management-section">
+                <h2>Firewall Management</h2>
+                <p>The Firewall Management section offers tools and options for controlling and securing your network's firewall settings. Firewalls are essential for protecting your network from unauthorized access and cyber threats.</p>
+               
+            </section>
+        </div>
+
+        
+        <div class="section-container">
+            <section class="management-section">
+                <h2>Account Management</h2>
+                <p>Welcome to the Cybersecurity Portal. You can either register a new account or log in to an existing one.</p>
+            
+                <button class="d" onclick="window.location.href='/main_login'">Register/Login</button>
+                <script>
+                    function redirectToCYB() {
+                        window.location.href = '/cyb';  // Redirect to the /cyb route
+                    }
+                </script>
+    
+            </section>
+        </div>
+        
+        
+    
+        
+
+    </main>
+
+    <!-- Footer -->s
+    <footer>
+        <p>&copy; 2023 Cybersecurity Portal</p>
+    </footer>
+
+    <script>
+        const registerLoginButton = document.getElementById("register-login-button");
+        let isRegister = true;
+
+        registerLoginButton.addEventListener("click", () => {
+            if (isRegister) {
+                // Perform the registration action here
+                alert("You have clicked Register.");
+            } else {
+                // Perform the login action here
+                alert("You have clicked Login.");
+            }
+
+            // Toggle the button text and action
+            isRegister = !isRegister;
+            registerLoginButton.textContent = isRegister ? "Register" : "Login";
+        });
+    </script>
+</body>
+</html>

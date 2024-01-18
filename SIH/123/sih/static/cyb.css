@@ -1,0 +1,133 @@
+/* Reset some default styles */
+body, h1, h2, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-image: url('main-background.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff6600;
+}
+
+/* Main Content Styles */
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #f0f0f0;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* Button Styles */
+.management-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.management-button:hover {
+    background-color: #ff4500; /* Darker shade on hover */
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+/* Two-column layout */
+.section-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+}
+
+.management-section {
+    flex-basis: calc(50% - 15px); /* 50% width with some spacing in between */
+    margin-bottom: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-container {
+        flex-direction: column; /* Stack sections on smaller screens */
+    }
+
+    .management-section {
+        flex-basis: 100%; /* Full width on smaller screens */
+    }
+}
+/* ... (previous styles) ... */
+
+/* Problem Statement Animation */
+.moving-text {
+    position: relative;
+    animation: moveRightToLeft 10s linear infinite; /* Adjust the duration and timing function as needed */
+}
+
+@keyframes moveRightToLeft {
+    0% {
+        right: -100%;
+    }
+    100% {
+        right: 100%; /* Adjust the distance the text travels */
+    }
+}
+
+/* ... (rest of the styles) ... */

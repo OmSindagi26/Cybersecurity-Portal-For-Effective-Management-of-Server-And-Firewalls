@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Provisioning</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4; /* Optional background color */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(238, 8, 8, 0.2);
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #111010;
+            border-radius: 3px;
+            font-size: 16px;
+            color: #0a0a0a;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .back {
+                position: absolute;
+                top: 6px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 18px;
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+    
+            .back:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+
+<body>
+    <a class="back" href="/">Back to Previous page </a>
+    <h1>Server Provisioning</h1>
+    <form method="POST" action="/server_provisioning">
+        <!-- Server provisioning form fields -->
+        <label for="server_name">Select Server:</label>
+        <select id="server_name" name="server_name" required>
+            <option value="Server1">Server1</option>
+            <option value="Server2">Server2</option>
+            <option value="Server3">Server3</option>
+            <option value="Server4">Server4</option>
+            <option value="Server5">Server5</option>
+        </select><br>
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>
+</body>
+</html>

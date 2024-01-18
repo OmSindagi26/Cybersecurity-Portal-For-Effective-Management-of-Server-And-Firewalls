@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provisioning Requests</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        form {
+                 margin-bottom: 15px;
+               }
+               .back {
+                position: absolute;
+                top: 6px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 18px;
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+    
+            .back:hover {
+                background-color: #0056b3;
+            }
+
+            .back {
+                position: absolute;
+                top: 6px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 18px;
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+    
+            .back:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <h1>Provisioning Requests</h1>
+     <!-- Button to access the monitoring dashboard -->
+      <a class="back" href="/">Back to Previous page </a>
+    <table>
+        <thead>
+            <tr>
+                <th>Requester</th>
+                <th>Server Name</th>
+                <th>Action</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in provisioning_requests %}
+                <tr>
+                    <td>{{ request.requester }}</td>
+                    <td>{{ request.server_name }}</td>
+                    <td>
+                        <form action="/update_action/{{ request.id }}" method="POST" onchange="updateStatusAndAction(this, 'status_select_{{ request.id }}', 'action_span_{{ request.id }}', 'status_span_{{ request.id }}');">
+                            <select name="new_action">
+                                <option value="Select">Select</option>
+                                <option value="Approved" {% if request.status == 'Approved' %} selected {% endif %} {% if request.action == 'Rejected' %} disabled {% endif %}>Approve</option>
+                                <option value="Rejected" {% if request.status == 'Rejected' %} selected {% endif %} {% if request.action == 'Approved' %} disabled {% endif %}>Reject</option>
+                            </select>
+                            <button type="button" style="display: none;" onclick="toggleActionDropdown('action_span_{{ request.id }}', 'select[name=new_action]');">Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form>
+                            <span id="status_span_{{ request.id }}">
+                                None
+                            </span>
+                            <select id="status_select_{{ request.id }}" name="status" style="display: none;">
+                                <option value="Pending" {% if request.status == 'Pending' %} selected {% endif %}>Pending</option>
+                                <option value="Approved" {% if request.status == 'Approved' %} selected {% endif %}>Approved</option>
+                                <option value="Rejected" {% if request.status == 'Rejected' %} selected {% endif %}>Rejected</option>
+                            </select>
+                            
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function updateStatusAndAction(form, statusSelectId, actionSpanId, statusSpanId) {
+            const statusSelect = document.getElementById(statusSelectId);
+            const actionSpan = document.getElementById(actionSpanId);
+            const statusSpan = document.getElementById(statusSpanId);
+
+            // Get the selected action
+            const newAction = form.querySelector('select[name="new_action"]').value;
+
+            // Update the status dropdown
+            statusSelect.value = newAction;
+
+            // Update the display of the selected status and action
+            statusSpan.textContent = newAction;
+            actionSpan.textContent = newAction;
+
+            // Disable the options in the action dropdown
+            const actionDropdown = form.querySelector('select[name="new_action"]');
+            actionDropdown.querySelectorAll('option').forEach(option => {
+                option.disabled = (option.value === newAction);
+            });
+
+            // Hide the action dropdown and show the "Edit" button after selection
+            const editButton = form.querySelector('button[type="button"]');
+            const submitButton = form.querySelector('button[type="submit"]');
+            editButton.style.display = 'block';
+            submitButton.style.display = 'none';
+
+            // Show the updated status
+            statusSpan.style.display = 'block';
+            statusSelect.style.display = 'none';
+
+            // Automatically submit the form
+            form.submit();
+        }
+
+        function toggleActionDropdown(actionSpanId, selectName) {
+            const actionSpan = document.getElementById(actionSpanId);
+            const actionDropdown = actionSpan.parentElement.querySelector(selectName);
+
+            if (actionSpan.style.display === 'block') {
+                actionSpan.style.display = 'none';
+                actionDropdown.style.display = 'block';
+            } else {
+                actionSpan.style.display = 'block';
+                actionDropdown.style.display = 'none';
+            }
+        }
+
+        
+    </script>
+    
+</body>
+</html>
+

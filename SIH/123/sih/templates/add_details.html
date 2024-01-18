@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Server and Firewall Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .add-section {
+            display: flex;
+            justify-content: space-between;
+        }
+        .add-section form {
+            width: 48%; /* Adjust the width as needed */
+        }
+        /* Style for the logout button */
+        .logout-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+        }
+        
+        /* Style for the server provisioning button */
+        .server-provisioning-button {
+            position: fixed;
+            top: 10px;
+            right: 30px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        /* Hover effect for the server provisioning button */
+        .server-provisioning-button:hover {
+            background-color: #0056b3;
+        }
+         /* Style for the hardware inventory */
+         .hardware-inventory {
+            position: fixed;
+            top: 50px;
+            right: 30px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        /* Hover effect for the server provisioning button */
+        .hardware-inventory:hover {
+            background-color: #0056b3;
+        }
+
+      .reporting-button {
+        position: fixed;
+        top: 90px; /* Adjust the top position as needed */
+        right: 30px;
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    /* Hover effect for the reporting button */
+    .reporting-button:hover {
+        background-color: #0056b3;
+       }
+
+       .load-balancer-button {
+        position: fixed;
+        top: 130px; /* Adjust the top position as needed */
+        right: 30px;
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    /* Hover effect for the reporting button */
+    .load-balancer-button:hover {
+        background-color: #0056b3;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Server and Firewall Details</h1>
+
+        <!-- Add Server and Firewall Sections Side by Side -->
+        <div class="add-section">
+            <!-- Add Server Form -->
+            <div>
+                <h2>Add a Server</h2>
+    {% if user and user['role'] == 'admin' %}
+        <form method="POST" action="/add_server">
+            <!-- Server input fields here -->
+            <label for="server_name">Name:</label>
+            <select id="server_name" name="server_name" required>
+                <option value="Server 1">Server 1</option>
+                <option value="Server 2">Server 2</option>
+                <option value="Server 3">Server 3</option>
+                <option value="Server 4">Server 4</option>
+                <option value="Server 5">Server 5</option>
+            </select><br><br>
+
+                        <label for="server_status">Status:</label>
+                        <select id="server_status" name="status">
+                            <option value="Online">Online</option>
+                            <option value="Offline">Offline</option>
+                        </select><br>
+
+                        <label for="server_ip">IP Address:</label>
+                        <input type="text" id="server_ip" name="ip" required><br>
+
+                        <button type="submit">Add</button>
+                    </form>
+                {% elif user and user['role'] == 'user' %}
+                    <p>Access denied. You do not have permission to add details.</p>
+                {% endif %}
+            </div>
+
+            <!-- Add Firewall Rule Form -->
+            <div>
+                <h2>Add a Firewall Rule</h2>
+                {% if user and user['role'] == 'admin' %}
+                    <form method="POST" action="/add_firewall_rule">
+                        <!-- Firewall rule input fields here -->
+                        <label for="firewall_source_ip">Source IP:</label>
+                        <input type="text" id="firewall_source_ip" name="source_ip" required><br>
+
+                        <label for="firewall_action">Action:</label>
+                        <select id="firewall_action" name="action">
+                            <option value="Allow">Allow</option>
+                            <option value="Deny">Deny</option>
+                        </select><br>
+
+                        <button type="submit">Add</button>
+                    </form>
+                {% elif user and user['role'] == 'user' %}
+                    <p>Access denied. You do not have permission to add details.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Add Server Provisioning Button (visible to logged-in users) -->
+        {% if user %}
+            <a href="/server_provisioning" class="server-provisioning-button">Server Provisioning</a>
+        {% endif %}
+
+        <!-- Add Server Provisioning Requests Button (visible to admin) -->
+        {% if user and user['role'] == 'admin' %}
+            <a href="/server_provisioning_requests" class="server-provisioning-button">Server Provisioning Requests</a>
+        {% endif %}
+
+        <!-- Logout Button (visible to all logged-in users) -->
+        {% if user %}
+            <a href="/logout" class="logout-button">Logout</a>
+        {% endif %}
+
+        <!-- Add Server Provisioning Requests Button (visible to admin) -->
+        {% if user and user['role'] == 'admin' %}
+            <a href="/hardware_inventory" class="hardware-inventory">Hardware Inventory</a>
+        {% endif %}
+
+        <!-- Add Reporting Button (visible to admin) -->
+        {% if user and user['role'] == 'admin' %}
+            <a href="/reporting_page" class="reporting-button">Reporting & Analytics</a>
+        {% endif %}
+
+        <!-- Button to access the load balancer management page -->
+        {% if user and user['role'] == 'admin' %}
+        <a href="/load" class="load-balancer-button">Load Balancer Management</a>
+        {% endif %}
+
+        
+        <!-- Links to View Server and Firewall Details -->
+        <a href="/server_details">View Server Details</a>
+        <a href="/firewall_details">View Firewall Details</a>
+        <!-- View Hardware Details Link (visible to admin) -->
+        {% if user and user['role'] == 'admin' %}
+            <a href="/hardware_details">View Hardware Details</a>
+        {% endif %}
+
+    </div>
+</body>
+</html>

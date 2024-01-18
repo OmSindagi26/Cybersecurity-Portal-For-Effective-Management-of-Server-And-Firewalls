@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Balancer Management</title>
+    <!-- Include your CSS stylesheets here -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        /* Style the header with a background color and text color */
+        h1 {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Style the welcome message */
+        div {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Center align the h2 element */
+        h2 {
+            text-align: center;
+            margin-top: 20px; /* Add some top margin for spacing */
+        }
+
+        /* Style the form */
+        form {
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        /* Style form elements */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style the list of load balancers */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Add spacing for the welcome message */
+        div p {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Load Balancer Management</h1>
+    
+    <!-- Display user information -->
+    <div>
+        <p>Welcome, {{ user.username }}!</p>
+    </div>
+
+    <!-- Load Balancer Management Form -->
+    <h2>Load Balancers</h2>
+    <form method="POST">
+        <label for="action">Action:</label>
+        <select name="action" id="action">
+            <option value="add">Add Load Balancer</option>
+            <option value="remove">Remove Load Balancer</option>
+        </select>
+        <input type="text" name="lb_name" placeholder="Load Balancer Name">
+        <input type="text" name="ip" placeholder="IP Address (for 'Add')">
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- List of Load Balancers -->
+    <ul>
+        {% for lb in load_balancers %}
+            <li>{{ lb.name }} ({{ lb.ip }}) - Status: {{ lb.status }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

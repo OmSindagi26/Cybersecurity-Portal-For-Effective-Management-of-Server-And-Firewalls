@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monitoring and Alerting Dashboard</title>
+    <!-- Include Chart.js and your CSS file -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      /   #dashboard {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                text-align: center;
+            }
+    
+            /* Create a container for thresholds and alerts */
+            .thresholds-and-alerts {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                max-width: 800px; /* Adjust the width as needed */
+                margin: 20px;
+            }
+    
+            /* Style for the user authentication form */
+            .auth-form {
+                flex: 1;
+                max-width: 400px;
+                margin: 20px;
+                padding: 20px;
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-align: left;
+            }
+    
+            .auth-form h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+    
+            .auth-form label {
+                font-weight: bold;
+            }
+    
+            .auth-form input[type="text"],
+            .auth-form input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+    
+            .auth-form button[type="submit"] {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+    
+            /* Style for customizable threshold inputs */
+            .threshold-form {
+                flex: 1;
+                max-width: 400px;
+                margin: 20px;
+                padding: 20px;
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-align: left;
+            }
+    
+            .threshold-form h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+    
+            .threshold-form label {
+                font-weight: bold;
+            }
+    
+            .threshold-form input[type="number"] {
+                width: 50px;
+            }
+    
+            .threshold-form span {
+                margin-left: 5px;
+            }
+    
+            .threshold-form button[type="submit"] {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+    
+            /* Style for displaying alerts in different colors */
+            .alerts {
+             
+                max-width: 500px;
+                margin: 270px;
+                padding: 100px;
+                background-color: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-align: center;
+                float:right;
+            }
+    
+            .alerts h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+    
+            .alerts ul {
+                list-style-type: none;
+                padding: 0;
+            }
+    
+            .alerts li {
+                margin-bottom: 10px;
+            }
+    
+            .alert-cpu {
+                color: red;
+            }
+    
+            .alert-ram {
+                color: blue;
+            }
+    
+            .alert-disk {
+                color: orange
+            }
+            .chart-container h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+    
+            /* Style for charts */
+            canvas {
+                max-width: 100%;
+                height: auto;
+            }
+            .chart-container {
+                max-width: 500px; /* Adjust the width as needed */
+                margin: 20px;
+                padding: 20px;
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-align: left;
+            }
+      }
+      .back {
+        position: absolute;
+        top: 6px;
+        left: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .back:hover {
+        background-color: #0056b3;
+    }
+    </style>
+</head>
+<body>
+    <a class="back" href="/">Back to Previous page </a>
+    
+    <!-- Monitoring and Alerting Dashboard -->
+    <div id="dashboard">
+        <h1>Monitoring and Alerting Dashboard</h1>
+         <!-- Customizable Thresholds -->
+         <div class="alerts">
+            <h2>Real-time Alerts</h2>
+            <ul id="alertList"></ul>
+        </div>
+         <div class="threshold-form">
+            <h2>Customizable Thresholds</h2>
+            <form>
+                <div class="form-group">
+                    <label for="cpuThreshold">CPU Threshold:</label>
+                    <input type="number" id="cpuThreshold" name="cpuThreshold" class="threshold-input" min="0" max="100" value="90">
+                    <span>%</span>
+                </div>
+                <div class="form-group">
+                    <label for="ramThreshold">RAM Threshold:</label>
+                    <input type="number" id="ramThreshold" name="ramThreshold" class="threshold-input" min="0" max="100" value="80">
+                    <span>%</span>
+                </div>
+                <div class="form-group">
+                    <label for="diskThreshold">Disk Threshold:</label>
+                    <input type="number" id="diskThreshold" name="diskThreshold" class="threshold-input" min="0" max="100" value="70">
+                    <span>%</span>
+                </div>
+                <button type="submit">Update Thresholds</button>
+        
+            </form>
+      
+
+        </div>      <!-- Real-time Alerts -->
+      
+    </div>
+    
+        <!-- CPU Usage Chart -->
+        <div class="chart-container">
+            <h2>CPU Usage</h2>
+            <canvas id="cpuChart"></canvas>
+        </div>
+
+        <!-- RAM Usage Chart -->
+        <div class="chart-container">
+            <h2>RAM Usage</h2>
+            <canvas id="ramChart"></canvas>
+        </div>
+
+        <!-- Disk Usage Chart -->
+        <div class="chart-container">
+            <h2>Disk Usage</h2>
+            <canvas id="diskChart"></canvas>
+        </div>
+   
+    
+       
+    <!-- Include JavaScript code for real-time updates -->
+    <script>
+        // Chart data and options
+        const chartData = {
+            cpu: { data: [], labels: [], title: 'CPU Usage' },
+            ram: { data: [], labels: [], title: 'RAM Usage' },
+            disk: { data: [], labels: [], title: 'Disk Usage' }
+        };
+
+        const chartOptions = {
+            scales: {
+                x: { display: true },
+                y: { beginAtZero: true, max: 100 }
+            }
+        };
+
+        // Create charts
+        const ctxCPU = document.getElementById('cpuChart').getContext('2d');
+        const ctxRAM = document.getElementById('ramChart').getContext('2d');
+        const ctxDisk = document.getElementById('diskChart').getContext('2d');
+
+        const charts = {
+            cpu: new Chart(ctxCPU, {
+                type: 'line',
+                data: {
+                    labels: chartData.cpu.labels,
+                    datasets: [{ label: chartData.cpu.title, data: chartData.cpu.data, borderColor: 'red', borderWidth: 2, fill: false }]
+                },
+                options: chartOptions
+            }),
+            ram: new Chart(ctxRAM, {
+                type: 'line',
+                data: {
+                    labels: chartData.ram.labels,
+                    datasets: [{ label: chartData.ram.title, data: chartData.ram.data, borderColor: 'blue', borderWidth: 2, fill: false }]
+                },
+                options: chartOptions
+            }),
+            disk: new Chart(ctxDisk, {
+                type: 'line',
+                data: {
+                    labels: chartData.disk.labels,
+                    datasets: [{ label: chartData.disk.title, data: chartData.disk.data, borderColor: 'orange', borderWidth: 2, fill: false }]
+                },
+                options: chartOptions
+            })
+        };
+
+        // Real-time alerts
+        function displayAlert(message, type) {
+            const alertList = document.getElementById('alertList');
+            const listItem = document.createElement('li');
+            listItem.textContent = message;
+            listItem.classList.add(`alert-${type}`);
+            alertList.appendChild(listItem);
+        }
+
+        // Simulated data generation (replace with actual data source)
+        function generateData(metric) {
+            // Simulate metric data (0-100%)
+            const newData = Math.floor(Math.random() * 101);
+            chartData[metric].data.push(newData);
+
+            // Keep a limited history (e.g., last 10 data points)
+            if (chartData[metric].data.length > 10) {
+                chartData[metric].data.shift();
+                chartData[metric].labels.shift();
+            }
+
+            // Add a new label (e.g., timestamp)
+            chartData[metric].labels.push(new Date().toLocaleTimeString());
+
+            // Check for threshold alerts
+            if (newData > document.getElementById(`${metric}Threshold`).value) {
+                displayAlert(`High ${chartData[metric].title} Alert: ${newData}%`, metric);
+            }
+
+            // Update the chart
+            charts[metric].update();
+        }
+
+        // Update the charts every 2 seconds
+        setInterval(() => {
+            generateData('cpu');
+            generateData('ram');
+            generateData('disk');
+        }, 2000);
+    </script>
+</body>
+</html>

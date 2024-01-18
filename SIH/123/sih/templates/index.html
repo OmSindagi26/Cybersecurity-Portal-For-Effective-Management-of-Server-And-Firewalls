@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ type }} Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ type }} Details</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <!-- Define table headers based on type -->
+                    {% if type == 'Server' %}
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>IP Address</th>
+                    {% elif type == 'Firewall Rule' %}
+                        <th>Rule ID</th>
+                        <th>Source IP</th>
+                        <th>Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details %}
+                    <tr>
+                        <!-- Define table rows based on type -->
+                        {% if type == 'Server' %}
+                            <td>{{ detail.name }}</td>
+                            <td>{{ detail.status }}</td>
+                            <td>{{ detail.ip }}</td>
+                        {% elif type == 'Firewall Rule' %}
+                            <td>{{ detail.rule_id }}</td>
+                            <td>{{ detail.source_ip }}</td>
+                            <td>{{ detail.action }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Back Button to Return to Add Details Page -->
+        <a href="/">Back to Add Details</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hardware Inventory Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<style>
+    .back {
+        position: absolute;
+        top: 6px;
+        left: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .back:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+    <a class="back" href="/">Back to Previous page </a>
+    
+    <h1>Hardware Inventory Details</h1>
+    <table>
+        <tr>
+            <th>Hardware Name</th>
+            <th>Status</th>
+            <th>Warranty Expiry Date</th>
+            <th>Next Maintenance Date</th>
+            <th>Action</th>
+        </tr>
+        {% for item in hardware_inventory %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.warranty_expiry_date }}</td>
+            <td>{{ item.next_maintenance_date }}</td>
+            <td>
+                <form method="POST" action="/delete_hardware">
+                    <input type="hidden" name="hardware_name" value="{{ item.name }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
